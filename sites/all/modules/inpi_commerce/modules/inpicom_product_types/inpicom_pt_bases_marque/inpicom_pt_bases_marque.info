@@ -1,0 +1,5 @@
+name = INPI Commerce Bases Marque Product Type
+description = Provide functions of Bases Marque Product Type
+package = inpi
+core = "7.x"
+version = "7.x-1.0"

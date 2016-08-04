@@ -1,0 +1,687 @@
+<?php
+
+function step3_menu()
+{
+  $menu['step3'] = array
+  (
+    'title' => 'Ajax multistep form example',
+    'description' => 'Creates an ajax multistep form',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('step3_multistep_form'),
+    'access callback' => TRUE,
+  );
+ 
+  return $menu;
+}
+ 
+function step3_multistep_form($form, &$form_state)
+{
+  // If $form_state['step'] is not set, we set it to 1
+  $form_state['step'] = isset($form_state['step']) ? $form_state['step'] : 1;
+ 
+  // Add a wrapper div that will be used by the Form API to update the form using AJAX
+  $form['#prefix'] = '<div id="step3_multistep_form">';
+  $form['#suffix'] = '</div>';
+ 
+  // Depending on which step of the form we are on, we output different form fields
+  switch($form_state['step'])
+  {
+    // Step 1
+    case 1:
+      $default_value = '';
+      if(isset($form_state['values']['step_1']))
+      {
+        $default_value = $form_state['values']['step_1'];
+      }
+      elseif(isset($form_state['storage']['step_1']))
+      {
+        $default_value = $form_state['storage']['step_1'];
+      }
+ 
+      $form['step_1'] = array
+      (
+        '#type' => 'file',
+        '#title' => t('Enter something alphabetical'),
+        //'#required' => TRUE,
+        //'#upload_location' => 'public://',
+        '#default_value' => $default_value,
+      );
+      break;
+ 
+    // Step 2
+    case 2:
+      $default_value = '';
+      if(isset($form_state['values']['step_2']))
+      {
+        $default_value = $form_state['values']['step_2'];
+      }
+      elseif(isset($form_state['storage']['step_2']))
+      {
+        $default_value = $form_state['storage']['step_2'];
+      }
+ 
+      $form['step_2'] = array
+      (
+         '#type' => 'select',
+       '#title' => t('Please selecte gender'),
+       '#options' => array(
+          ''=> t('Sélectionner'),
+'785'=> t('+ 998 (UZ)'),
+'692'=> t('+1 (AG)'),
+'929'=> t('+1 (BB)'),
+'845'=> t('+1 (CA)'),
+'752'=> t('+1 (DM)'),
+'542'=> t('+1 (DO)'),
+'566'=> t('+1 (GD)'),
+'710'=> t('+1 (KN)'),
+'761'=> t('+1 (LC)'),
+'917'=> t('+1 (TT)'),
+'899'=> t('+1 (US)'),
+'788'=> t('+1 (VC)'),
+'635'=> t('+20 (EG)'),
+'830'=> t('+212 (MA)'),
+'665'=> t('+213 (DZ)'),
+'881'=> t('+216 (TN)'),
+'905'=> t('+218 (LY)'),
+'698'=> t('+220 (GM)'),
+'515'=> t('+221 (SN)'),
+'521'=> t('+222 (MR)'),
+'920'=> t('+223 (ML)'),
+'572'=> t('+224 (GN)'),
+'908'=> t('+225 (CI)'),
+'599'=> t('+226 (BF)'),
+'701'=> t('+227 (NE)'),
+'857'=> t('+228 (TG)'),
+'836'=> t('+229 (BJ)'),
+'779'=> t('+231 (LR)'),
+'581'=> t('+232 (SL)'),
+'791'=> t('+233 (GH)'),
+'878'=> t('+234 (NG)'),
+'839'=> t('+235 (TD)'),
+'605'=> t('+236 (CF)'),
+'704'=> t('+237 (CM)'),
+'755'=> t('+239 (ST)'),
+'821'=> t('+240 (GQ)'),
+'854'=> t('+241 (GA)'),
+'902'=> t('+242 (CG)'),
+'506'=> t('+244 (AO)'),
+'866'=> t('+245 (GW)'),
+'695'=> t('+248 (SC)'),
+'563'=> t('+249 (SD)'),
+'722'=> t('+250 (RW)'),
+'809'=> t('+254 (KE)'),
+'608'=> t('+255 (TZ)'),
+'527'=> t('+256 (UG)'),
+'860'=> t('+258 (MZ)'),
+'617'=> t('+260 (ZM)'),
+'656'=> t('+261 (MG)'),
+'875'=> t('+263 (ZW)'),
+'509'=> t('+264 (NA)'),
+'794'=> t('+265 (MW)'),
+'596'=> t('+266 (LS)'),
+'671'=> t('+267 (BW)'),
+'800'=> t('+268 (SZ)'),
+'734'=> t('+269 (KM)'),
+'518'=> t('+27 (ZA)'),
+'764'=> t('+30 (GR)'),
+'653'=> t('+31 (NL)'),
+'551'=> t('+32 (BE)'),
+'638'=> t('+33 (FR)'),
+'560'=> t('+34 (ES)'),
+'812'=> t('+351 (PT)'),
+'818'=> t('+352 (LU)'),
+'494'=> t('+353 (IE)'),
+'827'=> t('+354 (IS)'),
+'575'=> t('+355 (AL)'),
+'500'=> t('+356 (MT)'),
+'884'=> t('+357 (CY)'),
+'536'=> t('+358 (FI)'),
+'647'=> t('+359 (BG)'),
+'737'=> t('+36 (HU)'),
+'623'=> t('+370 (LT)'),
+'863'=> t('+371 (LV)'),
+'728'=> t('+372 (EE)'),
+'545'=> t('+373 (MD)'),
+'626'=> t('+374 (AM)'),
+'620'=> t('+375 (BY)'),
+'539'=> t('+377 (MC)'),
+'716'=> t('+378 (SM)'),
+'554'=> t('+380 (UA)'),
+'782'=> t('+381 (RS)'),
+'650'=> t('+382 (ME)'),
+'896'=> t('+385 (HR)'),
+'725'=> t('+386 (SI)'),
+'770'=> t('+387 (BA)'),
+'740'=> t('+389 (MK)'),
+'503'=> t('+39 (IT)'),
+'557'=> t('+40 (RO)'),
+'797'=> t('+41 (CH)'),
+'731'=> t('+420 (CZ)'),
+'548'=> t('+421 (SK)'),
+'887'=> t('+423 (LI)'),
+'629'=> t('+43 (AT)'),
+'632'=> t('+44 (GB)'),
+'524'=> t('+45 (DK)'),
+'641'=> t('+46 (SE)'),
+'677'=> t('+47 (NO)'),
+'602'=> t('+48 (PL)'),
+'680'=> t('+49 (DE)'),
+'851'=> t('+501 (BZ)'),
+'926'=> t('+502 (GT)'),
+'662'=> t('+503 (SV)'),
+'719'=> t('+504 (HN)'),
+'668'=> t('+505 (NI)'),
+'689'=> t('+506 (CR)'),
+'584'=> t('+507 (PA)'),
+'773'=> t('+51 (PE)'),
+'683'=> t('+52 (MX)'),
+'848'=> t('+53 (CU)'),
+'869'=> t('+55 (BR)'),
+'578'=> t('+56 (CL)'),
+'491'=> t('+57 (CO)'),
+'872'=> t('+593 (EC)'),
+'890'=> t('+60 (MY)'),
+'686'=> t('+61 (AU)'),
+'614'=> t('+62 (ID)'),
+'803'=> t('+63 (PH)'),
+'743'=> t('+64 (NZ)'),
+'512'=> t('+65 (SG)'),
+'842'=> t('+66 (TH)'),
+'815'=> t('+673 (BN)'),
+'824'=> t('+675 (PG)'),
+'569'=> t('+7 (KZ)'),
+'590'=> t('+7 (RU)'),
+'533'=> t('+81 (JP)'),
+'923'=> t('+82 (KR)'),
+'914'=> t('+84 (VN)'),
+'911'=> t('+850 (KP)'),
+'893'=> t('+856 (LA)'),
+'674'=> t('+86 (CN)'),
+'611'=> t('+90 (TR)'),
+'644'=> t('+91 (IN)'),
+'497'=> t('+94 (LK)'),
+'707'=> t('+953 (SY)'),
+'746'=> t('+966 (SA)'),
+'530'=> t('+968 (OM)'),
+'713'=> t('+971 (AE)'),
+'767'=> t('+972 (IL)'),
+'806'=> t('+973 (BH)'),
+'758'=> t('+974 (QA)'),
+'749'=> t('+976 (MN)'),
+'932'=> t('+98 (IR)'),
+'776'=> t('+992 (TJ)'),
+'587'=> t('+993 (TM)'),
+'593'=> t('+994 (AZ)'),
+'833'=> t('+995 (GE)'),
+'659'=> t('+996 (KG)'),
+       ),
+       '#default_value' => $default_value,
+       //'#description' => t('Set this to <em>Yes</em> if you would like this category to be selected by default.'),
+      );
+        $form['step_2s'] = array
+      (
+         '#type' => 'select',
+       '#title' => t('Please selecte gender'),
+       '#options' => array(
+          ''=> t('- Sélectionner -'),
+'AF'=> t('Afghanistan'),
+'ZA'=> t('Afrique du Sud'),
+'AL'=> t('Albanie'),
+'DZ'=> t('Algérie'),
+'DE'=> t('Allemagne'),
+'AD'=> t('Andorre'),
+'AO'=> t('Angola'),
+'AI'=> t('Anguilla'),
+'AQ'=> t('Antarctique'),
+'AG'=> t('Antigua-et-Barbuda'),
+'AN'=> t('Antilles néerlandaises'),
+'SA'=> t('Arabie Saoudite'),
+'AR'=> t('Argentine'),
+'AM'=> t('Arménie'),
+'AW'=> t('Aruba'),
+'AU'=> t('Australie'),
+'AT'=> t('Autriche'),
+'AZ'=> t('Azerbaïdjan'),
+'BS'=> t('Bahamas'),
+'BH'=> t('Bahreïn'),
+'BD'=> t('Bangladesh'),
+'BB'=> t('Barbade'),
+'BE'=> t('Belgique'),
+'BZ'=> t('Belize'),
+'BM'=> t('Bermudes'),
+'BT'=> t('Bhoutan'),
+'MM'=> t('Birmanie'),
+'BY'=> t('Biélorussie'),
+'BO'=> t('Bolivie'),
+'BA'=> t('Bosnie-Herzégovine'),
+'BW'=> t('Botswana'),
+'BN'=> t('Brunei'),
+'BR'=> t('Brésil'),
+'BG'=> t('Bulgarie'),
+'BF'=> t('Burkina Faso'),
+'BI'=> t('Burundi'),
+'BJ'=> t('Bénin'),
+'KH'=> t('Cambodge'),
+'CM'=> t('Cameroun'),
+'CA'=> t('Canada'),
+'CV'=> t('Cap-Vert'),
+'CL'=> t('Chili'),
+'CN'=> t('Chine'),
+'CY'=> t('Chypre'),
+'CO'=> t('Colombie'),
+'KM'=> t('Comores'),
+'CG'=> t('Congo (Brazzaville)'),
+'CD'=> t('Congo (Kinshasa)'),
+'KP'=> t('Corée du Nord'),
+'KR'=> t('Corée du Sud'),
+'CR'=> t('Costa Rica'),
+'HR'=> t('Croatie'),
+'CU'=> t('Cuba'),
+'CW'=> t('Curaçao'),
+'CI'=> t('Côte d’Ivoire'),
+'DK'=> t('Danemark'),
+'DJ'=> t('Djibouti'),
+'DM'=> t('Dominique'),
+'ES'=> t('Espagne'),
+'EE'=> t('Estonie'),
+'FJ'=> t('Fidji'),
+'FI'=> t('Finlande'),
+'FR'=> t('France'),
+'GA'=> t('Gabon'),
+'GM'=> t('Gambie'),
+'GH'=> t('Ghana'),
+'GI'=> t('Gibraltar'),
+'GD'=> t('Grenade'),
+'GL'=> t('Groenland'),
+'GR'=> t('Grèce'),
+'GP'=> t('Guadeloupe'),
+'GU'=> t('Guam'),
+'GT'=> t('Guatemala'),
+'GG'=> t('Guernesey'),
+'GN'=> t('Guinée'),
+'GW'=> t('Guinée-Bissau'),
+'GQ'=> t('Guinée équatoriale'),
+'GY'=> t('Guyana'),
+'GF'=> t('Guyane française'),
+'GE'=> t('Géorgie'),
+'GS'=> t('Géorgie du Sud et les Îles Sandwich du Sud'),
+'HT'=> t('Haïti'),
+'HN'=> t('Honduras'),
+'HK'=> t('Hong Kong R.A.S., Chine'),
+'HU'=> t('Hongrie'),
+'IN'=> t('Inde'),
+'ID'=> t('Indonésie'),
+'IQ'=> t('Irak'),
+'IR'=> t('Iran'),
+'IE'=> t('Irlande'),
+'IS'=> t('Islande'),
+'IL'=> t('Israël'),
+'IT'=> t('Italie'),
+'JM'=> t('Jamaïque'),
+'JP'=> t('Japon'),
+'JE'=> t('Jersey'),
+'JO'=> t('Jordanie'),
+'KZ'=> t('Kazakhstan'),
+'KE'=> t('Kenya'),
+'KG'=> t('Kirghizistan'),
+'KI'=> t('Kiribati'),
+'KW'=> t('Koweït'),
+'LA'=> t('Laos'),
+'LS'=> t('Lesotho'),
+'LV'=> t('Lettonie'),
+'LB'=> t('Liban'),
+'LR'=> t('Libéria'),
+'LI'=> t('Liechtenstein'),
+'LT'=> t('Lituanie'),
+'LU'=> t('Luxembourg'),
+'LY'=> t('Lybie'),
+'MO'=> t('Macao R.A.S., Chine'),
+'MK'=> t('Macédoine'),
+'MG'=> t('Madagascar'),
+'MY'=> t('Malaisie'),
+'MW'=> t('Malawi'),
+'MV'=> t('Maldives'),
+'ML'=> t('Mali'),
+'MT'=> t('Malte'),
+'MA'=> t('Maroc'),
+'MQ'=> t('Martinique'),
+'MU'=> t('Maurice'),
+'MR'=> t('Mauritanie'),
+'YT'=> t('Mayotte'),
+'MX'=> t('Mexique'),
+'FM'=> t('Micronésie'),
+'MD'=> t('Moldavie'),
+'MC'=> t('Monaco'),
+'MN'=> t('Mongolie'),
+'MS'=> t('Montserrat'),
+'ME'=> t('Monténégro'),
+'MZ'=> t('Mozambique'),
+'NA'=> t('Namibie'),
+'NR'=> t('Nauru'),
+'NI'=> t('Nicaragua'),
+'NE'=> t('Niger'),
+'NG'=> t('Nigeria'),
+'NU'=> t('Niue'),
+'NO'=> t('Norvège'),
+'NC'=> t('Nouvelle-Calédonie'),
+'NZ'=> t('Nouvelle-Zélande'),
+'NP'=> t('Népal'),
+'OM'=> t('Oman'),
+'UG'=> t('Ouganda'),
+'UZ'=> t('Ouzbékistan'),
+'PK'=> t('Pakistan'),
+'PW'=> t('Palaos'),
+'PA'=> t('Panama'),
+'PG'=> t('Papouasie-Nouvelle-Guinée'),
+'PY'=> t('Paraguay'),
+'NL'=> t('Pays-Bas'),
+'BQ'=> t('Pays-Bas caribéens'),
+'PH'=> t('Philippines'),
+'PN'=> t('Pitcairn'),
+'PL'=> t('Pologne'),
+'PF'=> t('Polynésie française'),
+'PR'=> t('Porto Rico'),
+'PT'=> t('Portugal'),
+'PE'=> t('Pérou'),
+'QA'=> t('Qatar'),
+'RO'=> t('Roumanie'),
+'GB'=> t('Royaume-Uni'),
+'RU'=> t('Russie'),
+'RW'=> t('Rwanda'),
+'CF'=> t('République centrafricaine'),
+'DO'=> t('République dominicaine'),
+'CZ'=> t('République tchèque'),
+'RE'=> t('Réunion'),
+'EH'=> t('Sahara occidental'),
+'BL'=> t('Saint-Barthélemy'),
+'KN'=> t('Saint-Christophe-et-Niévès'),
+'SM'=> t('Saint-Marin'),
+'SX'=> t('Saint-Martin'),
+'MF'=> t('Saint-Martin (partie française)'),
+'PM'=> t('Saint-Pierre-et-Miquelon'),
+'VC'=> t('Saint-Vincent-et-les-Grenadines'),
+'SH'=> t('Sainte-Hélène'),
+'LC'=> t('Sainte-Lucie'),
+'SV'=> t('Salvador'),
+'WS'=> t('Samoa'),
+'AS'=> t('Samoa américaines'),
+'ST'=> t('Sao Tomé-et-Principe'),
+'RS'=> t('Serbie'),
+'SC'=> t('Seychelles'),
+'SL'=> t('Sierra Leone'),
+'SG'=> t('Singapour'),
+'SK'=> t('Slovaquie'),
+'SI'=> t('Slovénie'),
+'SO'=> t('Somalie'),
+'SD'=> t('Soudan'),
+'SS'=> t('Soudan du Sud'),
+'LK'=> t('Sri Lanka'),
+'CH'=> t('Suisse'),
+'SR'=> t('Suriname'),
+'SE'=> t('Suède'),
+'SJ'=> t('Svalbard et Île Jan Mayen'),
+'SZ'=> t('Swaziland'),
+'SY'=> t('Syrie'),
+'SN'=> t('Sénégal'),
+'TJ'=> t('Tadjikistan'),
+'TZ'=> t('Tanzanie'),
+'TW'=> t('Taïwan'),
+'TD'=> t('Tchad'),
+'TF'=> t('Terres australes françaises'),
+'IO'=> t('Territoire britannique de locéan Indien'),
+'PS'=> t('Territoire palestinien'),
+'TH'=> t('Thaïlande'),
+'TL'=> t('Timor oriental'),
+'TG'=> t('Togo'),
+'TK'=> t('Tokelau'),
+'TO'=> t('Tonga'),
+'TT'=> t('Trinité-et-Tobago'),
+'TN'=> t('Tunisie'),
+'TM'=> t('Turkménistan'),
+'TR'=> t('Turquie'),
+'TV'=> t('Tuvalu'),
+'UA'=> t('Ukraine'),
+'UY'=> t('Uruguay'),
+'VU'=> t('Vanuatu'),
+'VA'=> t('Vatican'),
+'VE'=> t('Venezuela'),
+'VN'=> t('Vietnam'),
+'WF'=> t('Wallis et Futuna'),
+'YE'=> t('Yémen'),
+'ZM'=> t('Zambie'),
+'ZW'=> t('Zimbabwe'),
+'EG'=> t('Égypte'),
+'AE'=> t('Émirats arabes unis'),
+'EC'=> t('Équateur'),
+'ER'=> t('Érythrée'),
+'US'=> t('États-Unis'),
+'ET'=> t('Éthiopie'),
+'BV'=> t('Île Bouvet'),
+'CX'=> t('Île Christmas'),
+'IM'=> t('Île de Man'),
+'NF'=> t('Île Norfolk'),
+'AX'=> t('Îles Aland'),
+'KY'=> t('Îles Caïmans'),
+'CC'=> t('Îles Cocos (Keeling)'),
+'CK'=> t('Îles Cook'),
+'FO'=> t('Îles Féroé'),
+'HM'=> t('Îles Heard et MacDonald'),
+'FK'=> t('Îles Malouines'),
+'MP'=> t('Îles Mariannes du Nord'),
+'MH'=> t('Îles Marshall'),
+'UM'=> t('Îles mineures éloignées des États-Unis'),
+'SB'=> t('Îles Salomon'),
+'TC'=> t('Îles Turques-et-Caïques'),
+'VI'=> t('Îles Vierges américaines'),
+'VG'=> t('Îles Vierges britanniques'),
+       ),
+       '#default_value' => $default_value,
+       //'#description' => t('Set this to <em>Yes</em> if you would like this category to be selected by default.'),
+      );
+ 
+ 
+      break;
+ 
+    // Step 3
+    case 3:
+      $default_value = '';
+      if(isset($form_state['values']['step_3']))
+      {
+        $default_value = $form_state['values']['step_3'];
+      }
+      elseif(isset($form_state['storage']['step_3']))
+      {
+        $default_value = $form_state['storage']['step_3'];
+      }
+ 
+      $form['step_3'] = array
+      (
+        '#type' => 'textfield',
+        '#title' => t('Enter Email'),
+        '#required' => TRUE,
+        '#default_value' => $default_value,
+      );
+ 
+      break;
+  }
+ 
+  // Create a container for our buttons
+  $form['buttons'] = array
+  (
+    '#type' => 'container',
+  );
+  // If we are on step 1, we do not want a back button
+  if($form_state['step'] !== 1)
+  {
+    $form['buttons']['back'] = array
+    (
+      '#type' => 'submit',
+      '#value' => t('Back'),
+      // Setting #limit_validation_errors to an empty array
+      // ensures that the form fields are not validated when
+      // the back button is used. Otherwise, we will get errors
+      '#limit_validation_errors' => array(),
+      // We need to create a #submit function for this button, or else
+      // #limit_validation_errors has no effect. So we create a submit
+      // function specifically for this submit button.
+      '#submit' => array('step3_multistep_form_back_submit'),
+      '#ajax' => array
+      (
+        // We pass in the wrapper we created at the start of the form
+        'wrapper' => 'step3_multistep_form',
+        // We pass a callback function we will use later to render the form for the user
+        'callback' => 'step3_multistep_form_ajax_callback',
+      ),
+    );
+  }
+  // We only want a forward button if we are not on the last step of the form
+  if($form_state['step'] !== 3)
+  {
+    $form['buttons']['forward'] = array
+    (
+      '#type' => 'submit',
+      '#value' => t('Next'),
+      '#ajax' => array
+      (
+        // We pass in the wrapper we created at the start of the form
+        'wrapper' => 'step3_multistep_form',
+        // We pass a callback function we will use later to render the form for the user
+        'callback' => 'step3_multistep_form_ajax_callback',
+      ),
+    );
+  }
+  // We only want a submit button if we are on the last step of the form
+  else
+  {
+    $form['buttons']['submit'] = array
+    (
+      '#type' => 'submit',
+      '#value' => t('Submit'),
+      '#ajax' => array
+      (
+        // We pass in the wrapper we created at the start of the form
+        'wrapper' => 'step3_multistep_form',
+        // We pass a callback function we will use later to render the form for the user
+        'callback' => 'step3_multistep_form_ajax_callback',
+      ),
+    );
+  }
+ 
+  return $form;
+}
+ function step3_form_validate($form, &$form_state) {
+  $file = file_save_upload('step_1', array(
+    'file_validate_is_image' => array(),
+    'file_validate_extensions' => array('png gif jpg jpeg'),
+    'file_validate_size' => array(1024*1024*2),
+  ));
+  if ($file) {
+    if ($file = file_move($file, 'public://')) {
+      $form_state['values']['step_1'] = $file;
+    }
+    else {
+      form_set_error('step_1', t('Failed to write the uploaded file the site\'s file folder.'));
+    }
+  }
+  else {
+    form_set_error('step_1', t('No file was uploaded.'));
+  }
+}
+// function step3_form_validate($form, &$form_state)
+// {
+
+//   // First we set up a switch for each of our three steps
+//   switch($form_state['step'])
+//   {
+//     case "1":
+//   //  $file = file_save_upload('step_1', array(
+//   //   'file_validate_is_image' => array(),
+//   //   'file_validate_extensions' => array('png gif jpg jpeg'),
+//   //   'file_validate_size' => array(1024*1024*2),
+//   // ));
+//   // if ($file) {
+//   //   if ($file = file_move($file, 'public://')) {
+//   //     $form_state['values']['step_1'] = $file;
+//   //   }
+//   //   else {
+//   //     form_set_error('step_1', t('Failed to write the uploaded file the site\'s file folder.'));
+//   //   }
+//   // }
+//   // else {
+//   //   form_set_error('step_1', t('No file was uploaded.'));
+//   // }
+//       break;
+ 
+//     case "2":
+//       // Check that the second value is numeric
+//       // if(preg_match('/\D/', $form_state['values']['step_2']))
+//       // {
+//       //   form_set_error('step_2', t('Numeric characters only please'));
+//       // }
+ 
+//       break;      
+ 
+//     case "3":
+//       // Check that the third value is alphanumeric
+//        $email = $form_state['values']['step_3'];
+//      if(!valid_email_address($email)){
+//      form_set_error('step_3', t('The email address appears to be invalid.'));
+//   }
+ 
+//   //     break;
+ 
+//   }
+//  }
+ 
+function step3_multistep_form_back_submit($form, &$form_state)
+{
+  $form_state['step']--;
+ 
+  // Because this is a multi-step form, we always need to rebuild the form
+  // on every step, even after submission. This allows our form to be completely
+  // Ajaxified without ever requiring a page load.
+  $form_state['rebuild'] = TRUE;
+}
+ 
+function step3_multistep_form_submit($form, &$form_state)
+{
+  // First we determine which step we are on, and save the
+  // submitted values to $form_state['storage']. This will
+  // allow our submitted values to persist.
+  $step = $form_state['step'];
+  $form_state['storage']['step_' . $step] = $form_state['values']['step_' . $step];
+ 
+  // Check to see if the next/forward button was clicked
+  if(isset($form_state['values']['forward']) && $form_state['values']['op'] == $form_state['values']['forward'])
+  {
+    // Increase the step by one, to move on to the next step
+    $form_state['step']++;
+  }
+  // Check to see if the final step has been submitted
+  elseif(isset($form_state['values']['submit']) && $form_state['values']['op'] == $form_state['values']['submit'])
+  {
+    // Here we will collect the data and show the submitted values to the user in a message.
+    // In a real-world application of this form, you would use the submitted values to complete the
+    // purpose of the form - save them to the database and/or send an email and/or display something
+    // to the user etc. The following is just s simple example to show how the values can be used.
+    $items = array($form_state['storage']['step_1'], $form_state['storage']['step_2'], $form_state['storage']['step_3']);
+    drupal_set_message(t('You submitted the following values:!values', array('!values' => theme('item_list', array('items' => $items)))));
+ 
+    // The form has been completed, so we want to return the user to step 1
+    // as well as clear any saved values.
+    $form_state['step'] = 1;
+    $form_state['storage'] = array();
+  }
+ 
+  // As in step3_multistep_form_back_submit(), we need to set
+  // $form_state['rebuild'] to TRUE, in able to ensure that our
+  // our form is rebuilt, allowing for the multi-step process
+  $form_state['rebuild'] = TRUE;
+}
+ 
+function step3_multistep_form_ajax_callback($form, &$form_state)
+{
+  return $form;
+}
+
+

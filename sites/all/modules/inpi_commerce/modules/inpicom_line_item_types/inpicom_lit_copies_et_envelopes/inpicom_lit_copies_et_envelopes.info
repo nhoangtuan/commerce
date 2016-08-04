@@ -1,0 +1,5 @@
+name = INPI Commerce Copies et Envelopes Product Type
+description = Provide functions of Copies et Envelopes Product Type
+package = inpi
+core = "7.x"
+version = "7.x-1.0"
